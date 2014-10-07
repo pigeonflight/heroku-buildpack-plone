@@ -33,8 +33,8 @@ if [ -f $ENV_DIR/BUILDOUT_CFG ]; then
     export "BUILDOUT_CFG=$(cat $ENV_DIR/BUILDOUT_CFG)"
     echo "Found ${BUILDOUT_CFG}" | indent
 else
-    export "BUILDOUT_CFG=buildout.cfg"
-    echo "Using default: buildout.cfg" | indent
+    export "BUILDOUT_CFG=heroku.cfg"
+    echo "Using default: heroku.cfg" | indent
 fi
 
 echo "-----> Read BUILDOUT_VERBOSITY from env vars, or use default"
@@ -51,7 +51,7 @@ if [ -f $ENV_DIR/BOOTSTRAP_PY_URL ]; then
     export "BOOTSTRAP_PY_URL=$(cat $ENV_DIR/BOOTSTRAP_PY_URL)"
     echo "Use custom bootstrap.py: ${BOOTSTRAP_PY_URL}" | indent
 else
-    export "BOOTSTRAP_PY_URL=http://downloads.buildout.org/1/bootstrap.py"
+    export "BOOTSTRAP_PY_URL=http://downloads.buildout.org/2/bootstrap.py"
     echo "Use default bootstrap.py: ${BOOTSTRAP_PY_URL}" | indent
 fi
 
