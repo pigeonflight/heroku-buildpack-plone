@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 """Since Plone cannot read env vars or command line parameters we have to
-go through the zope.conf and searc/replace values. Bad Plone!"""
+go through the zope.conf and search/replace values. Bad Plone!"""
 import os
 
 DIR = '/app/'
