@@ -2,7 +2,7 @@
 """A script used for verifying if Plone was installed correctly.
 
 Run like this:
-bin/instance run test.py
+bin/plone run test.py
 """
 
 import sys

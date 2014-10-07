@@ -15,7 +15,7 @@ To run Plone on Heroku, you need to add the following configuration to your
     ...
     relative-paths = true
 
-    [instance]
+    [plone]
     ...
     relative-paths = true
     eggs +=
@@ -38,7 +38,7 @@ To understand the configuration changes, you need to know the following things a
 
 1. Heroku calls a single server instance a [dyno](https://devcenter.heroku.com/articles/dynos).
 
-2. Heroku uses a two-step deployment workflow. In Plone's case, this buildpack first compiles a "runtime slug" with ``bin/buildout``. Then, Heroku copies the slug to a dyno and runs your app code against this slug with ``bin/instance console``. Because ``bin/buildout`` runs in a different place from ``bin/instance``, we need to fix some of the paths that buildout generates. The ``relative-paths`` flag fixes most of the paths for us, and then the buildpack uses ``sed`` to fix the rest of the paths in the buildout-generated ``zope.conf`` file.
+2. Heroku uses a two-step deployment workflow. In Plone's case, this buildpack first compiles a "runtime slug" with ``bin/buildout``. Then, Heroku copies the slug to a dyno and runs your app code against this slug with ``bin/plone console``. Because ``bin/buildout`` runs in a different place from ``bin/instance``, we need to fix some of the paths that buildout generates. The ``relative-paths`` flag fixes most of the paths for us, and then the buildpack uses ``sed`` to fix the rest of the paths in the buildout-generated ``zope.conf`` file.
 
 3. At ``bin/buildout`` slug compile-time, the port number on which Plone will run is unknown. The port number is given as an environment variable only when Heroku runs the runtime slug on a dyno. Because Plone does not support environment variables in the ``zope.conf`` and does not read command-line parameters when ``bin/instance`` starts, this buildpack includes a ``configure_zopeconf.py`` script that injects port number from the environment variables into ``zope.conf``. This script runs just before starting the Plone instance on the dyno.
 
