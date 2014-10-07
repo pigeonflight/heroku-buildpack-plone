@@ -63,8 +63,8 @@ echo "-----> Run bin/buildout -c ${BUILDOUT_CFG} ${BUILDOUT_VERBOSITY}"
 bin/buildout -c $BUILDOUT_CFG $BUILDOUT_VERBOSITY
 
 echo "-----> Fix paths in zope.conf"
-sed "s|${BUILD_DIR}|/app|" parts/instance/etc/zope.conf > zope.conf.new
-mv zope.conf.new parts/instance/etc/zope.conf
+sed "s|${BUILD_DIR}|/app|" parts/plone/etc/zope.conf > zope.conf.new
+mv zope.conf.new parts/plone/etc/zope.conf
 
 echo "-----> Copy results to cache"
 cp -r $BUILD_DIR/bin $CACHE_DIR
