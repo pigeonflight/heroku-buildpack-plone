@@ -82,8 +82,8 @@ echo "-----> Fix paths in zope.conf"
 sed "s|${BUILD_DIR}|/app|" parts/plone/etc/zope.conf > zope.conf.new
 mv zope.conf.new parts/plone/etc/zope.conf
 
-echo "-----> Install plonesite"
-bin/buildout -c $BUILDOUT_CFG $BUILDOUT_VERBOSITY
+#echo "-----> Install plonesite"
+#bin/buildout -c $BUILDOUT_CFG $BUILDOUT_VERBOSITY
 
 echo "-----> Copy results to cache"
 cp -r $BUILD_DIR/bin $CACHE_DIR
