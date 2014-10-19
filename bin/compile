@@ -10,6 +10,7 @@ indent() {
 BUILD_DIR=$1  # -> temp dir that contains whatever is in the git repo
 CACHE_DIR=$2  # -> use this dir for caching between compiles
 ENV_DIR=$3  # -> environment variables are stored as files inside here
+INSTALL_DIR="$BUILD_DIR/.heroku/vendor/buildout"  # -> after buildout is
 # finished, copy results to this dir so they get compressed into a Heroku slug
 
 # make sure dirs exist
@@ -24,8 +25,7 @@ if [ -d $CACHE_DIR/bin ]; then
     cp -r $CACHE_DIR/parts  $BUILD_DIR/
     cp -r $CACHE_DIR/var  $BUILD_DIR/
 else
-    echo "Cache empty, will prime with unified installer" | indent
-    
+    echo "Cache empty, start from scratch" | indent
 fi
 
 echo "-----> Read BUILDOUT_CFG from env vars, or use default"
@@ -33,8 +33,8 @@ if [ -f $ENV_DIR/BUILDOUT_CFG ]; then
     export "BUILDOUT_CFG=$(cat $ENV_DIR/BUILDOUT_CFG)"
     echo "Found ${BUILDOUT_CFG}" | indent
 else
-    export "BUILDOUT_CFG=heroku.cfg"
-    echo "Using default: heroku.cfg" | indent
+    export "BUILDOUT_CFG=buildout.cfg"
+    echo "Using default: buildout.cfg" | indent
 fi
 
 echo "-----> Read BUILDOUT_VERBOSITY from env vars, or use default"
@@ -51,7 +51,7 @@ if [ -f $ENV_DIR/BOOTSTRAP_PY_URL ]; then
     export "BOOTSTRAP_PY_URL=$(cat $ENV_DIR/BOOTSTRAP_PY_URL)"
     echo "Use custom bootstrap.py: ${BOOTSTRAP_PY_URL}" | indent
 else
-    export "BOOTSTRAP_PY_URL=http://downloads.buildout.org/2/bootstrap.py"
+    export "BOOTSTRAP_PY_URL=http://downloads.buildout.org/1/bootstrap.py"
     echo "Use default bootstrap.py: ${BOOTSTRAP_PY_URL}" | indent
 fi
 
@@ -63,8 +63,8 @@ echo "-----> Run bin/buildout -c ${BUILDOUT_CFG} ${BUILDOUT_VERBOSITY}"
 bin/buildout -c $BUILDOUT_CFG $BUILDOUT_VERBOSITY
 
 echo "-----> Fix paths in zope.conf"
-sed "s|${BUILD_DIR}|/app|" parts/plone/etc/zope.conf > zope.conf.new
-mv zope.conf.new parts/plone/etc/zope.conf
+sed "s|${BUILD_DIR}|/app|" parts/instance/etc/zope.conf > zope.conf.new
+mv zope.conf.new parts/instance/etc/zope.conf
 
 echo "-----> Copy results to cache"
 cp -r $BUILD_DIR/bin $CACHE_DIR
@@ -79,7 +79,7 @@ cp -r $BUILD_DIR/parts $INSTALL_DIR
 cp -r $BUILD_DIR/var $INSTALL_DIR
 
 echo "-----> Copy configure_zopeconf.py script to slug"
-curl -OL "https://raw.githubusercontent.com/pigeonflight/heroku-buildpack-plone/master/configure_zopeconf.py"
+curl -OL "https://raw.githubusercontent.com/niteoweb/heroku-buildpack-plone/master/configure_zopeconf.py"
 cp -r $BUILD_DIR/configure_zopeconf.py $INSTALL_DIR
 
 echo "Done" | indent
