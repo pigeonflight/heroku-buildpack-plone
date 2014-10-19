@@ -11,8 +11,8 @@ BUILD_DIR=$1  # -> temp dir that contains whatever is in the git repo
 CACHE_DIR=$2  # -> use this dir for caching between compiles
 ENV_DIR=$3  # -> environment variables are stored as files inside here
 INSTALL_DIR="$BUILD_DIR/.heroku/vendor/buildout"  # -> after buildout is
-UNIFIED_INSTALLER_DIRNAME=Plone-4.3.3-UnifiedInstaller
-UNIFIED_INSTALLER_URL=https://launchpad.net/plone/4.3/4.3.3/+download/Plone-4.3.3-UnifiedInstaller.tgz
+UNIFIED_INSTALLER_DIRNAME="Plone-4.3.3-UnifiedInstaller"
+UNIFIED_INSTALLER_URL="https://launchpad.net/plone/4.3/4.3.3/+download/Plone-4.3.3-UnifiedInstaller.tgz"
 # finished, copy results to this dir so they get compressed into a Heroku slug
 
 # make sure dirs exist
@@ -29,7 +29,7 @@ if [ -d $CACHE_DIR/bin ]; then
 else
     echo "Cache empty, will prime with unified installer" | indent
     cd $BUILD_DIR
-    curl -O UNIFIED_INSTALLER_URL
+    curl -O $UNIFIED_INSTALLER_URL
     #-O Plone-4.3.3-UnifiedInstaller.tgz
     tar xvfz ${UNIFIED_INSTALLER_DIRNAME}.tgz
     cd ${UNIFIED_INSTALLER_DIRNAME}
