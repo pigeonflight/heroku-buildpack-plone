@@ -51,7 +51,7 @@ if [ -f $ENV_DIR/BOOTSTRAP_PY_URL ]; then
     export "BOOTSTRAP_PY_URL=$(cat $ENV_DIR/BOOTSTRAP_PY_URL)"
     echo "Use custom bootstrap.py: ${BOOTSTRAP_PY_URL}" | indent
 else
-    export "BOOTSTRAP_PY_URL=http://downloads.buildout.org/1/bootstrap.py"
+    export "BOOTSTRAP_PY_URL=http://downloads.buildout.org/2/bootstrap.py"
     echo "Use default bootstrap.py: ${BOOTSTRAP_PY_URL}" | indent
 fi
 
@@ -63,8 +63,8 @@ echo "-----> Run bin/buildout -c ${BUILDOUT_CFG} ${BUILDOUT_VERBOSITY}"
 bin/buildout -c $BUILDOUT_CFG $BUILDOUT_VERBOSITY
 
 echo "-----> Fix paths in zope.conf"
-sed "s|${BUILD_DIR}|/app|" parts/instance/etc/zope.conf > zope.conf.new
-mv zope.conf.new parts/instance/etc/zope.conf
+sed "s|${BUILD_DIR}|/app|" parts/plone/etc/zope.conf > zope.conf.new
+mv zope.conf.new parts/plone/etc/zope.conf
 
 echo "-----> Copy results to cache"
 cp -r $BUILD_DIR/bin $CACHE_DIR
@@ -79,7 +79,7 @@ cp -r $BUILD_DIR/parts $INSTALL_DIR
 cp -r $BUILD_DIR/var $INSTALL_DIR
 
 echo "-----> Copy configure_zopeconf.py script to slug"
-curl -OL "https://raw.githubusercontent.com/niteoweb/heroku-buildpack-plone/master/configure_zopeconf.py"
+curl -OL "https://raw.githubusercontent.com/pigeonflight/heroku-buildpack-plone/master/configure_zopeconf.py"
 cp -r $BUILD_DIR/configure_zopeconf.py $INSTALL_DIR
 
 echo "Done" | indent
