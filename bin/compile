@@ -25,7 +25,13 @@ if [ -d $CACHE_DIR/bin ]; then
     cp -r $CACHE_DIR/parts  $BUILD_DIR/
     cp -r $CACHE_DIR/var  $BUILD_DIR/
 else
-    echo "Cache empty, start from scratch" | indent
+    echo "Cache empty, will prime with unified installer" | indent
+    cd $BUILD_DIR
+    wget https://launchpad.net/plone/4.3/4.3.3/+download/Plone-4.3.3-UnifiedInstaller.tgz -O Plone-4.3.3-UnifiedInstaller.tgz
+    tar xvfz Plone-4.3.3-UnifiedInstaller.tgz
+    cd Plone-4.3.3-UnifiedInstaller
+    tar xfj $PKG/build-cache.tar.bz2
+    cp -r buildout-cache/eggs $BUILD_DIR
 fi
 
 echo "-----> Read BUILDOUT_CFG from env vars, or use default"
