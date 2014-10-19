@@ -13,6 +13,7 @@ ENV_DIR=$3  # -> environment variables are stored as files inside here
 INSTALL_DIR="$BUILD_DIR/.heroku/vendor/buildout"  # -> after buildout is
 UNIFIED_INSTALLER_DIRNAME='Plone-4.3.3-UnifiedInstaller'
 UNIFIED_INSTALLER_URL='https://launchpad.net/plone/4.3/4.3.3/+download/Plone-4.3.3-UnifiedInstaller.tgz'
+UNIFIED_INSTALLER_TGZ='Plone-4.3.3-UnifiedInstaller.tgz'
 # finished, copy results to this dir so they get compressed into a Heroku slug
 
 # make sure dirs exist
@@ -29,10 +30,11 @@ if [ -d $CACHE_DIR/bin ]; then
 else
     echo "Cache empty, will prime with unified installer" | indent
     cd $BUILD_DIR
+    echo "Download unified installer" | indent
     curl -O $UNIFIED_INSTALLER_URL
     #-O Plone-4.3.3-UnifiedInstaller.tgz
-    tar xfz ${UNIFIED_INSTALLER_DIRNAME}.tgz
-    cd ${UNIFIED_INSTALLER_DIRNAME}
+    tar xfz $UNIFIED_INSTALLER_TGZ
+    cd $UNIFIED_INSTALLER_DIRNAME
     tar xfj $PKG/build-cache.tar.bz2
     cp -r buildout-cache/eggs $BUILD_DIR
     cd ..
