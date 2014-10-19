@@ -35,7 +35,7 @@ else
     tar xfz $UI_TARBALL
     cd $UI_DIR
     echo "Unpacking Installer cache" | indent
-    tar xfj packages/buildout-cache.tar.bz
+    tar xfj packages/buildout-cache.tar.bz2
     echo "Moving cache eggs to build directory" | indent
     cp -r buildout-cache/eggs $BUILD_DIR/
     echo "Clean up Installer files" | indent
