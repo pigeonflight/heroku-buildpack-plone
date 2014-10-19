@@ -75,12 +75,15 @@ cd $BUILD_DIR
 echo "-----> Bootstrap buildout"
 curl -OL "${BOOTSTRAP_PY_URL}"
 python bootstrap.py -c $BUILDOUT_CFG
-echo "-----> Run bin/buildout -c ${BUILDOUT_CFG} ${BUILDOUT_VERBOSITY}"
-bin/buildout -c $BUILDOUT_CFG $BUILDOUT_VERBOSITY
+echo "-----> Run bin/buildout -c ${BUILDOUT_CFG} ${BUILDOUT_VERBOSITY} plonesite:enabled=False"
+bin/buildout -c $BUILDOUT_CFG $BUILDOUT_VERBOSITY plonesite:enabled=False
 
 echo "-----> Fix paths in zope.conf"
 sed "s|${BUILD_DIR}|/app|" parts/plone/etc/zope.conf > zope.conf.new
 mv zope.conf.new parts/plone/etc/zope.conf
+
+echo "-----> Install plonesite"
+bin/buildout -c $BUILDOUT_CFG $BUILDOUT_VERBOSITY
 
 echo "-----> Copy results to cache"
 cp -r $BUILD_DIR/bin $CACHE_DIR
