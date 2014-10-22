@@ -6,7 +6,12 @@ import os
 DIR = '/app/'
 zope_conf_orig = DIR + 'parts/plone/etc/zope.conf'
 zope_conf_new = DIR + 'parts/plone/etc/zope.conf.new'
+zodbpack_conf_orig = DIR + 'zodbpack.conf'
+zodbpack_conf_tmpl = DIR + 'zodbpack.conf.tmpl'
+zodbpack_conf_new = DIR + 'zodbpack.conf.new'
 
+
+rewrite zope conf
 with open(zope_conf_new, 'wt') as fout:
     with open(zope_conf_orig, 'rt') as fin:
         for line in fin:
@@ -20,3 +25,17 @@ with open(zope_conf_new, 'wt') as fout:
             )
 
 os.system('mv {} {}'.format(zope_conf_new, zope_conf_orig))
+
+# rewrite zodbpack template
+with open(zodbpack_conf_new, 'wt') as fout:
+    with open(zodbpack_conf_tmpl, 'rt') as fin:
+        for line in fin:
+            fout.write(
+                line.
+                replace('PG_HOST', os.environ['DATABASE_URL'].split('@')[1].split(':')[0]).
+                replace('PG_DBNAME', os.environ['DATABASE_URL'].split('/')[-1]).
+                replace('PG_USER', os.environ['DATABASE_URL'].split('//')[1].split(':')[0]).
+                replace('PG_PASS', os.environ['DATABASE_URL'].split('//')[1].split(':')[1].split('@')[0])
+            )
+
+os.system('mv {} {}'.format(zodbpack_conf_new, zodbpack_conf_orig))
