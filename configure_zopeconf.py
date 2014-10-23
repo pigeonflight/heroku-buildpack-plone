@@ -11,7 +11,7 @@ zodbpack_conf_tmpl = DIR + 'zodbpack.conf.tmpl'
 zodbpack_conf_new = DIR + 'zodbpack.conf.new'
 
 
-rewrite zope conf
+#rewrite zope conf
 with open(zope_conf_new, 'wt') as fout:
     with open(zope_conf_orig, 'rt') as fin:
         for line in fin:
