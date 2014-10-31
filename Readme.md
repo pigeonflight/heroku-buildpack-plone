@@ -61,7 +61,7 @@ This section shows an example prompt session. This example assumes that you alre
     $ git add buildout.cfg
     $ git commit -m "initial commit"
 
-    $ heroku create --buildpack git://github.com/niteoweb/heroku-buildpack-plone.git
+    $ heroku create --buildpack git://github.com/pigeonflight/heroku-buildpack-plone.git
 
     $ git push heroku master
     ...
