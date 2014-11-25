@@ -46,6 +46,8 @@ else
 fi
 
 echo "-----> Inject custom ZODB file to pack more data per row"
+mkdir -p $BUILD_DIR/downloads/dist
+mkdir -p $BUILD_DIR/downloads/cmmi
 cd $BUILD_DIR/downloads/dist
 curl -OL $CUSTOM_ZODB_URL
 
