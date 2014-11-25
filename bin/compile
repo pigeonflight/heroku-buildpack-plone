@@ -41,8 +41,6 @@ else
     cp -r buildout-cache/eggs $BUILD_DIR/
     echo "Moving cache downloads to build directory" | indent
     cp -r buildout-cache/downloads $BUILD_DIR/
-    
-
 fi
 
 if [ -f $ENV_DIR/USE_BIG_BUCKET ]; then
@@ -52,6 +50,8 @@ if [ -f $ENV_DIR/USE_BIG_BUCKET ]; then
   mkdir -p $BUILD_DIR/downloads/cmmi
   cd $BUILD_DIR/downloads/dist
   curl -OL $CUSTOM_ZODB_URL
+else
+  echo "-----> USE BIG_BUCKET is not set"
 fi
 
 echo "-----> Read BUILDOUT_CFG from env vars, or use default"
