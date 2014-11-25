@@ -45,11 +45,14 @@ else
 
 fi
 
-echo "-----> Inject custom ZODB file to pack more data per row"
-mkdir -p $BUILD_DIR/downloads/dist
-mkdir -p $BUILD_DIR/downloads/cmmi
-cd $BUILD_DIR/downloads/dist
-curl -OL $CUSTOM_ZODB_URL
+if [ -f $ENV_DIR/USE_BIG_BUCKET ]; then
+  echo "-----> USE_BIG_BUCKET is set"  
+  echo "-----> Inject custom ZODB file to pack more data per row"
+  mkdir -p $BUILD_DIR/downloads/dist
+  mkdir -p $BUILD_DIR/downloads/cmmi
+  cd $BUILD_DIR/downloads/dist
+  curl -OL $CUSTOM_ZODB_URL
+fi
 
 echo "-----> Read BUILDOUT_CFG from env vars, or use default"
 if [ -f $ENV_DIR/BUILDOUT_CFG ]; then
