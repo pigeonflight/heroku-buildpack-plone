@@ -39,7 +39,7 @@ else
     tar xfj packages/buildout-cache.tar.bz2
     echo "Moving cache eggs to build directory" | indent
     cp -r buildout-cache/eggs $BUILD_DIR/
-    echo "Moving cache eggs to build directory" | indent
+    echo "Moving cache downloads to build directory" | indent
     cp -r buildout-cache/downloads $BUILD_DIR/
     
 
